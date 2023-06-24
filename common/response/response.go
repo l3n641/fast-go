@@ -29,3 +29,7 @@ func Fail(c *gin.Context, errorCode int, msg string) {
 		msg,
 	})
 }
+
+func TokenFail(c *gin.Context) {
+	Fail(c, 401, "未授权")
+}
