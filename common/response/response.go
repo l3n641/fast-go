@@ -1,8 +1,10 @@
 package response
 
 import (
+	"fast-go/global"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"os"
 )
 
 // Response 响应结构体
@@ -32,4 +34,20 @@ func Fail(c *gin.Context, errorCode int, msg string) {
 
 func TokenFail(c *gin.Context) {
 	Fail(c, 401, "未授权")
+}
+
+func ServerError(c *gin.Context, err interface{}) {
+	msg := "Internal Server Error"
+	// 非生产环境显示具体错误信息
+	if global.App.Config.App.Env != "production" && os.Getenv(gin.EnvGinMode) != gin.ReleaseMode {
+		if _, ok := err.(error); ok {
+			msg = err.(error).Error()
+		}
+	}
+	c.JSON(http.StatusInternalServerError, Response{
+		http.StatusInternalServerError,
+		nil,
+		msg,
+	})
+	c.Abort()
 }

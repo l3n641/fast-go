@@ -3,8 +3,6 @@ package main
 import (
 	"fast-go/bootstrap"
 	"fast-go/global"
-	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func main() {
@@ -30,13 +28,6 @@ func main() {
 		}
 	}()
 
-	r := gin.Default()
-
-	// 测试路由
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
-	})
-
 	// 启动服务器
-	r.Run(":" + global.App.Config.App.Port)
+	bootstrap.RunServer()
 }
