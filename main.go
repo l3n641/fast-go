@@ -2,6 +2,7 @@ package main
 
 import (
 	"fast-go/bootstrap"
+	"fast-go/cmd"
 	"fast-go/global"
 )
 
@@ -28,6 +29,6 @@ func main() {
 		}
 	}()
 
-	// 启动服务器
-	bootstrap.RunServer()
+	cmd.Execute()
+
 }
